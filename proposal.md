@@ -1,8 +1,8 @@
-## Pawtactor! Proposal
+## Pawtactor!(protector) Proposal
 
 ## Project Description
 - The aliens are invading earth! but they are scared of cats...
-So we are shooting cats at horrible aliens to save Earth! (Referencing Angry Birds, in exchange of the birds, it's cats and for the blocks, it's aliens.)
+So we are shooting protector cats at the horrible aliens to save Earth! (Referencing Angry Birds, in exchange of the birds, it's cats and for the blocks, it's aliens.)
 ## Needs To Have List
 - Collision
 - Characters(aliens, cats)
