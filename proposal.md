@@ -13,7 +13,6 @@ So we are shooting protector cats at the horrible aliens to save Earth! (Referen
 - Use of class
 - background music
 
-- 
 ## Nice To Have List
 - Levels (5)
 - Start menu
