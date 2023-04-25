@@ -7,6 +7,7 @@ So we are shooting protector cats at the horrible aliens to save Earth! (Referen
 - Collision
 - Characters(aliens, cats)
 - Matter.js
+- p5.vector
 - Sound effects
 - Controls(Arrow keys)
 - Instruction on "How to play?" at the beginning
