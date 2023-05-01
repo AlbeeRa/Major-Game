@@ -19,17 +19,9 @@ function draw() {
   mainMenu();
 }
 
-// //starting screen animation
-// function linearToRect(linearX, rectX,rectY,rectW,rectH){
-//   let w = (rectW + rectH) * 2;
-   
-//   //making sure cats are on the rect
-//   linearX = linearX % w;
-//   // check on the top side
-//   if(linearX <= rectW){
-//     return {x:rectX + linearX, y: rectY};
-//   }
-// }
+//starting screen animation
+function linearToRect(linearX,rectX,rectY,rectW,rectH){
+  
 
 function mainMenu(){
   if (mode===0){
