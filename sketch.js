@@ -3,17 +3,26 @@
 // Date
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// 
 
 let mode; // to determine the game has started or not
 let sky;
 let myFont;
+let ground;
 
-let bgImg;
-let x1 = 0;
-let x2;
+class Box{
+  constructor(x,y,w,h){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
+  display(){
+    fill(255);
+    rect(this.x,this.y,this.w,this.h);
+  }
+}
 
-let scrollSpeed = 2;
 
 function preload(){
   sky = loadImage("clouds.png");
@@ -24,55 +33,65 @@ function preload(){
 function setup() {
   mode = 0;
   createCanvas(windowWidth, windowHeight);
-  x2 = width;
-  textSize(100);
+  textSize(60);
 }
 
 function draw() {
   background(0);
-  //rect(mouseX, mouseY,50,50);
   mainMenu();
-  // if (mode===1){
-  //   image(sky, x1, 0, width, height);
-  //   image(sky, x2, 0, width, height);
-
-  //   x1 -= scrollSpeed;
-  //   x2 -= scrollSpeed;
-
-  //   if (x1 < -width){
-  //     x1 = width;
-  //   }
-  //   if (x2 < -width){
-  //     x2 = width;
-  //   }
-  // }
-  // //game bg
-  
 }
 
-//starting screen animation
-function linearToRect(linearX,rectX,rectY,rectW,rectH){}
+
 
 //idea: raining cats or cats moving in rectangle
 function mainMenu(){
+
+  //first thing you will see
   if (mode===0){
     background(sky);
-    fill("#fff5eb");
+
+    //title
     textAlign(CENTER);
+    fill("black");
+    text("Pawtactor", windowWidth/2,windowHeight/3);
+
+    //start command
+    fill("#fff5eb");
+    text("Press Enter", windowWidth/2,windowHeight/2);
     textFont(myFont);
-    text("ENTER TO START", windowWidth/2,windowHeight/2);
   }
+  //How to play
   if (mode=== 1 ){
-    background();
+
+    //tutorial
+    fill("#ffffff");
+    text("press shift to start", windowWidth/2,windowHeight/2);
+
+    textSize(40);
+    fill("#fff5eb");
+    text("use your mouse to control the cat", windowWidth/2,windowHeight/3);
+  }
+
+  if (mode === 2 ){ //Game start
+    background(0);
     rect(mouseX, mouseY,50,50);
   }
+
 }
 
 function keyPressed() {
-  if (keyCode === ENTER) { // start of the game
+  if (keyCode === ENTER) { // tutorial
     mode= 1;
   }
   if (keyCode === ESCAPE) {// go back to the main menu
     mode= 0;
   }
+  if (keyCode === SHIFT) {// start of the game
+    mode= 2;
+  }
 }
+
+
+// game coding
+
+
