@@ -7,8 +7,10 @@
 
 let mode; // to determine the game has started or not
 let sky;
+let city;
 let myFont;
 let ground;
+let box;
 
 class Box{
   constructor(x,y,w,h){
@@ -16,9 +18,16 @@ class Box{
     this.y = y;
     this.w = w;
     this.h = h;
+    this.groundColour = color("#082226");
   }
+  //ground
+  displayGround(){
+    fill(this.groundColour);
+    rect(this.x,this.y,this.w,this.h);
+  }
+  //aliens
   display(){
-    fill(255);
+    fill("#00ff6e");
     rect(this.x,this.y,this.w,this.h);
   }
 }
@@ -26,6 +35,7 @@ class Box{
 
 function preload(){
   sky = loadImage("clouds.png");
+  city = loadImage("cityscape.png");
   myFont = loadFont("ClassicRock.ttf");
 }
 
@@ -33,12 +43,16 @@ function preload(){
 function setup() {
   mode = 0;
   createCanvas(windowWidth, windowHeight);
+  ground = new Box(0,windowHeight/1.2,windowWidth,200);
+  box = new Box(550,windowHeight/1.35,100,85);
   textSize(60);
 }
 
 function draw() {
   background(0);
   mainMenu();
+  box.display();
+  //ground.display();
 }
 
 
@@ -73,8 +87,7 @@ function mainMenu(){
   }
 
   if (mode === 2 ){ //Game start
-    background(0);
-    rect(mouseX, mouseY,50,50);
+    pawtactor();
   }
 
 }
@@ -93,5 +106,9 @@ function keyPressed() {
 
 
 // game coding
-
+function pawtactor(){
+  background(city);
+  ground.displayGround();
+  box.display();
+}
 
