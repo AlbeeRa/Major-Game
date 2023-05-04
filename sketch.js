@@ -6,11 +6,17 @@
 // 
 
 let mode; // to determine the game has started or not
+
+//image
 let sky;
 let city;
+let alien;
+let kitty;
+
 let myFont;
 let ground;
 let box;
+let cat;
 
 class Box{
   constructor(x,y,w,h){
@@ -27,8 +33,20 @@ class Box{
   }
   //aliens
   display(){
-    fill("#00ff6e");
-    rect(this.x,this.y,this.w,this.h);
+    image(alien,windowWidth/1.5,(windowHeight/2.4),width/4,height/2);
+  }
+}
+
+class Cat{
+  constructor(x,y,r){
+    this.x = x;
+    this.y = y;
+    this.r = r;
+  }
+  displayCat(){
+    fill(255);
+    image(kitty,windowWidth/3,(windowHeight/2.4),width/6,height/5);
+
   }
 }
 
@@ -36,6 +54,8 @@ class Box{
 function preload(){
   sky = loadImage("clouds.png");
   city = loadImage("cityscape.png");
+  alien = loadImage("alien.png");
+  kitty = loadImage("cat.png")
   myFont = loadFont("ClassicRock.ttf");
 }
 
@@ -44,15 +64,22 @@ function setup() {
   mode = 0;
   createCanvas(windowWidth, windowHeight);
   ground = new Box(0,windowHeight/1.2,windowWidth,200);
-  box = new Box(550,windowHeight/1.35,100,85);
+
+  box = new Box(alien,this.x,this.y,this.w, this.h);
+  //change to cat png
+  cat = new Cat(kitty,this.x,this.y,this.w,this.h);
+  //cat = new Cat(windowWidth/5,(windowHeight/1.2)-90,50);
   textSize(60);
 }
 
 function draw() {
   background(0);
   mainMenu();
-  box.display();
-  //ground.display();
+
+  //testing
+  // box.display();
+  // ground.displayGround();
+  // cat.displayCat();
 }
 
 
@@ -108,7 +135,8 @@ function keyPressed() {
 // game coding
 function pawtactor(){
   background(city);
-  ground.displayGround();
   box.display();
+  ground.displayGround();
+  cat.displayCat();
 }
 
