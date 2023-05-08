@@ -17,6 +17,7 @@ let myFont;
 let ground;
 let box;
 let cat;
+//let world,engine;
 
 class Box{
   constructor(x,y,w,h){
@@ -45,7 +46,7 @@ class Cat{
   }
   displayCat(){
     fill(255);
-    image(kitty,windowWidth/3,(windowHeight/2.4),width/6,height/5);
+    image(kitty,windowWidth/7,(windowHeight/1.5),width/8,height/5);
 
   }
 }
@@ -63,8 +64,10 @@ function preload(){
 function setup() {
   mode = 0;
   createCanvas(windowWidth, windowHeight);
-  ground = new Box(0,windowHeight/1.2,windowWidth,200);
 
+  //engine = 
+
+  ground = new Box(0,windowHeight/1.2,windowWidth,200);
   box = new Box(alien,this.x,this.y,this.w, this.h);
   //change to cat png
   cat = new Cat(kitty,this.x,this.y,this.w,this.h);
@@ -77,9 +80,9 @@ function draw() {
   mainMenu();
 
   //testing
-  // box.display();
-  // ground.displayGround();
-  // cat.displayCat();
+  box.display();
+  ground.displayGround();
+  cat.displayCat();
 }
 
 
@@ -107,6 +110,7 @@ function mainMenu(){
     //tutorial
     fill("#ffffff");
     text("press shift to start", windowWidth/2,windowHeight/2);
+    text("press esc to return", windowWidth/2,windowHeight/1.1);
 
     textSize(40);
     fill("#fff5eb");
