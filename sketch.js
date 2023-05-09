@@ -37,7 +37,7 @@ class Box{
     image(alien,windowWidth/1.5,(windowHeight/2.4),width/4,height/2);
   }
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Cat{
   constructor(x,y,r){
     this.x = x;
@@ -51,7 +51,7 @@ class Cat{
   }
 }
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function preload(){
   sky = loadImage("clouds.png");
   city = loadImage("cityscape.png");
@@ -65,13 +65,9 @@ function setup() {
   mode = 0;
   createCanvas(windowWidth, windowHeight);
 
-  //engine = 
-
   ground = new Box(0,windowHeight/1.2,windowWidth,200);
   box = new Box(alien,this.x,this.y,this.w, this.h);
-  //change to cat png
   cat = new Cat(kitty,this.x,this.y,this.w,this.h);
-  //cat = new Cat(windowWidth/5,(windowHeight/1.2)-90,50);
   textSize(60);
 }
 
@@ -85,7 +81,7 @@ function draw() {
   cat.displayCat();
 }
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //idea: raining cats or cats moving in rectangle
 function mainMenu(){
@@ -142,5 +138,6 @@ function pawtactor(){
   box.display();
   ground.displayGround();
   cat.displayCat();
+  cat.moveTowards(mouse, 0.10);
 }
 
