@@ -5,9 +5,7 @@
 // Extra for Experts:
 // 
 //add music links
-///reserching p5play (youtube tutorials)
 //https://www.youtube.com/watch?v=o9_Gu3TI4IY or https://www.youtube.com/watch?v=hAAlDoAtV7Y
-
 
 
 let mode; // to determine the game has started or not
@@ -22,7 +20,6 @@ let myFont;
 let ground;
 let box;
 let cat;
-//let world,engine;
 
 class Box{
   constructor(x,y,w,h){
@@ -61,37 +58,20 @@ function preload(){
   sky = loadImage("clouds.png");
   city = loadImage("cityscape.png");
   alien = loadImage("alien.png");
-  kitty = loadImage("cat.png")
-  myFont = loadFont("ClassicRock.ttf");
+  kitty = loadImage("cat.png");
+  //myFont = loadFont("ClassicRock.ttf");
 }
 
-
+let playerSprite;
 function setup() {
   mode = 0;
   createCanvas(windowWidth, windowHeight);
-  //stretchy = new Sprite();
+
+
   ground = new Box(0,windowHeight/1.2,windowWidth,200);
   box = new Box(alien,this.x,this.y,this.w, this.h);
   cat = new Cat(kitty,this.x,this.y,this.w,this.h);
   textSize(60);
-	
-// 	stretchy.draw = () => {
-// 		fill(237, 205, 0);
-
-// 		push();
-// 		rotate(stretchy.direction);
-// 		ellipse(0, 0, 100 + stretchy.speed, 100 - stretchy.speed);
-// 		pop();
-
-// 		image(kitty, stretchy.vel.x * 2, stretchy.vel.y * 2);
-// 	};
-
-// 	stretchy.update = () => {
-// 		stretchy.moveTowards(mouseX, 0.07);
-// 	};
-  // }
-
-
 }
 
 function draw() {
@@ -102,8 +82,8 @@ function draw() {
   box.display();
   ground.displayGround();
   cat.displayCat();
-}
 
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //idea: raining cats or cats moving in rectangle
@@ -121,7 +101,7 @@ function mainMenu(){
     //start command
     fill("#fff5eb");
     text("Press Enter", windowWidth/2,windowHeight/2);
-    textFont(myFont);
+    //textFont(myFont);
 ///////////////////////////////////////////////////////
 
 
