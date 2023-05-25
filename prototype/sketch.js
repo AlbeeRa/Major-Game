@@ -15,4 +15,5 @@ function draw() {
   background(220);
   bird.position.x = mouseX;
   bird.position.y = mouseY;
+  bird.velocity.x = 5;
 }
