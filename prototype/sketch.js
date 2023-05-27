@@ -5,7 +5,6 @@
 let spr;
 let cat;
 let wall;
-let boxes;
 
 function preload(){
   cat = loadImage('cat.png');
@@ -24,11 +23,7 @@ function setup() {
   wall.shapeColor = color("brown");
   wall.collider="s";
 
-  for (let i = 0; i < 4; i++) {
-    let box = createSprite(windowWidth/2, windowHeight/2, 25, 25);
-    box.shapeColor = color(255, 0, 0);
-    boxes.add(box);
-  }
+
 }
 
 function draw() {
@@ -37,7 +32,6 @@ function draw() {
   spr.velocity.x = (mouseX - spr.position.x)*0.1;
   spr.velocity.y = (mouseY - spr.position.y)*0.1;
   spr.collide(wall);
-  spr.displace(boxes);
   drawSprites();
 
 }
