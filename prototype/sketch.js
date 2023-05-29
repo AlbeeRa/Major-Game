@@ -50,6 +50,19 @@ function setup() {
 
 function draw() {
   background(255);
+  if(bird.mouse.dragging()){
+    let distance = dist(bird.x,bird.y,stringStartX,stringStartY);
+      if(distance<120){
+        line(stringStartX,stringStartY,bird.x,bird.y)
+        bird.collider = 'k';
+        bird.moveTowards(mouse.x+bird.mouse.x,mouse.y +bird.mouse.y,1)
+      }
+      else{
+        bird.x=startX;
+        bird.y=startY;
+      }
+      }
+  }
 
   // spr.velocity.x = (mouseX - spr.position.x)*0.1;
   // spr.velocity.y = (mouseY - spr.position.y)*0.1;
