@@ -68,4 +68,4 @@ function draw() {
   // spr.velocity.y = (mouseY - spr.position.y)*0.1;
   // spr.collide(wall);
   // drawSprites();
-}
+
