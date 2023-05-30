@@ -35,16 +35,16 @@ function setup() {
 
 
 
-  // ///cat stuff
-  // spr = createSprite( width/2, height/2, cat.width,cat.height);
-  // spr.addImage(cat);
-  // spr.shapeColor = color(255);
-  // spr.velocity.y = 0;
+// ///cat stuff
+// spr = createSprite( width/2, height/2, cat.width,cat.height);
+// spr.addImage(cat);
+// spr.shapeColor = color(255);
+// spr.velocity.y = 0;
 
-  // //ground 
-  // wall = createSprite(windowWidth / 2,  windowHeight / 1.01, windowWidth, 100);
-  // wall.shapeColor = color("brown");
-  // wall.collider="s";
+// //ground 
+// wall = createSprite(windowWidth / 2,  windowHeight / 1.01, windowWidth, 100);
+// wall.shapeColor = color("brown");
+// wall.collider="s";
 
 
 
@@ -52,20 +52,20 @@ function draw() {
   background(255);
   if(bird.mouse.dragging()){
     let distance = dist(bird.x,bird.y,stringStartX,stringStartY);
-      if(distance<120){
-        line(stringStartX,stringStartY,bird.x,bird.y)
-        bird.collider = 'k';
-        bird.moveTowards(mouse.x+bird.mouse.x,mouse.y +bird.mouse.y,1)
-      }
-      else{
-        bird.x=startX;
-        bird.y=startY;
-      }
-      }
+    if(distance<120){
+      line(stringStartX,stringStartY,bird.x,bird.y);
+      bird.collider = 'k';
+      bird.moveTowards(mouse.x+bird.mouse.x,mouse.y +bird.mouse.y,1)
+    }
+    else{
+      bird.x=startX;
+      bird.y=startY;
+    }
   }
+}
 
-  // spr.velocity.x = (mouseX - spr.position.x)*0.1;
-  // spr.velocity.y = (mouseY - spr.position.y)*0.1;
-  // spr.collide(wall);
-  // drawSprites();
+// spr.velocity.x = (mouseX - spr.position.x)*0.1;
+// spr.velocity.y = (mouseY - spr.position.y)*0.1;
+// spr.collide(wall);
+// drawSprites();
 
