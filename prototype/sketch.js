@@ -30,7 +30,7 @@ function setup() {
 
   bird = new Sprite(startX,startY);
   bird.diameter = 15;
-  let floor = new Sprite(0,height,width*2,10,'s');
+  let floor = new Sprite(0,height,width*2,10,'static');
 }
 
 
