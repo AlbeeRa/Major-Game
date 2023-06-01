@@ -7,44 +7,41 @@
 // let wall;
 
 let bird;
-let startX = 50;
-let startY =100;
+let startX = '';
+let startY ='';
 
-let stringStartX= 100;
-let stringStartY = 130;
+let stringStartX= ''; 
+let stringStartY ='';
 let slingshot;
 
 function preload(){
-  cat = loadImage('cat.png');
+  cat = loadImage("cat.png");
 }
 
 function setup() {
-  createCanvas(500, 200);
+  createCanvas(windowWidth, windowHeight);
   world.gravity.y = 20;
+  startX = windowWidth/10;
+  startY =windowHeight/10;
 
+  stringStartX= windowWidth/6;
+  stringStartY = 2*windowHeight/2.5;
+
+  let boxY = 500;
   for (let i = 0; i<5; i++){
-    let boxY = 100;
-    new Sprite (400,boxY-20,30,30);
+    boxY = boxY-50;
+    new Sprite (4*windowWidth/5,boxY,100,100);
+    Sprite.color = 'yellow';
   }
-  slingshot = new Sprite(stringStartX,stringStartY, 10, windowHeight/8,"n");
+
+  slingshot = new Sprite(stringStartX,stringStartY, 20, windowHeight/10,"n");
 
   bird = new Sprite(startX,startY);
-  bird.diameter = 15;
-  let floor = new Sprite(0,height,width*2,10,'s');
+  bird.diameter = 50;
+  let floor = new Sprite(0,height,width*2,10,"static");
 }
 
 
-
-  // ///cat stuff
-  // spr = createSprite( width/2, height/2, cat.width,cat.height);
-  // spr.addImage(cat);
-  // spr.shapeColor = color(255);
-  // spr.velocity.y = 0;
-
-  // //ground 
-  // wall = createSprite(windowWidth / 2,  windowHeight / 1.01, windowWidth, 100);
-  // wall.shapeColor = color("brown");
-  // wall.collider="s";
 
 
 
@@ -52,20 +49,31 @@ function draw() {
   background(255);
   if(bird.mouse.dragging()){
     let distance = dist(bird.x,bird.y,stringStartX,stringStartY);
-      if(distance<120){
-        line(stringStartX,stringStartY,bird.x,bird.y)
-        bird.collider = 'k';
-        bird.moveTowards(mouse.x+bird.mouse.x,mouse.y +bird.mouse.y,1)
-      }
-      else{
-        bird.x=startX;
-        bird.y=startY;
-      }
-      }
+    if(distance<120){
+      line(stringStartX*windowWidth/10,stringStartY*windowHeight/10,bird.x,bird.y);
+      bird.collider = "k";
+      bird.moveTowards(mouse.x+bird.mouse.x,mouse.y +bird.mouse.y,1);
+    }
+    else{
+      bird.x=startX;
+      bird.y=startY;
+      bird.collider = "k";
+    }
   }
 
-  // spr.velocity.x = (mouseX - spr.position.x)*0.1;
-  // spr.velocity.y = (mouseY - spr.position.y)*0.1;
-  // spr.collide(wall);
-  // drawSprites();
+  if(mouse.released()){
+    bird.direction = bird.angleTo(slingshot);
+    bird.vel.x = (stringStartX - bird.x)/7;
+    bird.vel.y = (stringStartY -bird.y)/7;
+    bird.mass = 30;
+    bird.collider = "d";
+  }
+
+
+//THINGS TO DO!!
+//pointing system :(when the bird touches the brick, it turns red (disapears) and adds 1 to counter
+//which will be displayed in the left corner)
+
+}
+
 
