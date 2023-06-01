@@ -60,20 +60,21 @@ function draw() {
       bird.collider = "k";
     }
   }
+}
 
-  if(mouse.released()){
-    bird.direction = bird.angleTo(slingshot);
-    bird.vel.x = (stringStartX - bird.x)/7;
-    bird.vel.y = (stringStartY -bird.y)/7;
-    bird.mass = 30;
-    bird.collider = "d";
-  }
+if(mouse.released()){
+  bird.direction = bird.angleTo(slingshot);
+  bird.vel.x = (stringStartX - bird.x)/7;
+  bird.vel.y = (stringStartY -bird.y)/7;
+  bird.mass = 30;
+  bird.collider = "d";
+}
 
 
 //THINGS TO DO!!
 //pointing system :(when the bird touches the brick, it turns red (disapears) and adds 1 to counter
 //which will be displayed in the left corner)
 
-}
+
 
 
