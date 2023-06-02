@@ -6,6 +6,10 @@
 // let cat;
 // let wall;
 
+
+//https://www.youtube.com/watch?v=1J_zmef3I2Y 
+//https://www.youtube.com/watch?v=KiC7gyE4IwM
+//https://www.youtube.com/watch?v=AXfeZr2ISTs&list=PLQgDWpXcKGAe3R6oLy5pfdrXn-poA4-uu
 let bird;
 let startX = '';
 let startY ='';
@@ -62,6 +66,20 @@ function draw() {
   }
 }
 
+//   if(bird.x<0){ //check left wall
+//     bird.direction = bird.direction*-1;
+//   }
+//   if(bird.x>windowWidth){ //check right
+//     bird.direction = bird.direction*-1;
+//   }
+//   if(bird.y<0){ //check top wall
+//     bird.direction = bird.direction*-1;
+//   }
+//   if(bird.y>windowHeight){ //check bottom
+//     bird.direction = bird.direction*-1;
+//   }
+// }
+
 if(mouse.released()){
   bird.direction = bird.angleTo(slingshot);
   bird.vel.x = (stringStartX - bird.x)/7;
@@ -69,6 +87,7 @@ if(mouse.released()){
   bird.mass = 30;
   bird.collider = "d";
 }
+
 
 
 //THINGS TO DO!!
