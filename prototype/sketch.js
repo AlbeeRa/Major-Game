@@ -7,7 +7,6 @@
 // let wall;
 
 
-//https://www.youtube.com/watch?v=1J_zmef3I2Y 
 //https://www.youtube.com/watch?v=KiC7gyE4IwM
 //https://www.youtube.com/watch?v=AXfeZr2ISTs&list=PLQgDWpXcKGAe3R6oLy5pfdrXn-poA4-uu
 let bird;

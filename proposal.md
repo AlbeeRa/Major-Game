@@ -9,8 +9,6 @@ So we are shooting protector cats at the horrible aliens to save Earth! (Referen
 - Characters(aliens, cats)
 - Physics engine (Matter.js/Box2d)
 - p5.vector
-- Sound effects
-- Controls(Arrow keys)
 - Instruction on "How to play?" at the beginning
 - background music
 
@@ -18,3 +16,4 @@ So we are shooting protector cats at the horrible aliens to save Earth! (Referen
 - Levels (5)
 - Settings (sounds, difficulty of levels)
 - Different cat avatars
+- Sound effects
