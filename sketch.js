@@ -15,65 +15,53 @@ let Composite = Matter.Composite;
 // create an engine
 let engine; 
 let world;
-let boxes=[];
 let runner;
 
 let ground;
-
+let box;
 function setup(){
-  createCanvas(400,400);
+  createCanvas(windowWidth,windowHeight);
   engine = Engine.create();
   world = engine.world;
-
-  let option ={
-    isStatic:true
-  };
-  ground = Bodies.rectangle(200,height,width,100,option);
-  Composite.add(engine.world,[ground]);
   runner = Runner.create();
   Runner.run(runner, engine);
-}
 
+  ground = new Box (0,height-70,width,70);
+  box = new Box(width/2,height/1.67,width/12,200);
+
+}
 function draw(){
   background(51);
-  for(let i = 0;i<boxes.length;i++){
-    boxes[i].show();
+  ground.display();
+  box.display();
+}
+
+
+class Box{
+  constructor(x,y,w,h){
+    this.x = x;
+    this.y = y;
+    this.w= w;
+    this.h= h;
   }
-  noStroke();
-  fill(170);
-  strokeWeight(3);
-  rectMode(CENTER);
-  rect(ground.position.x,ground.position.y,width,100);
-}
-
-function mousePressed(){
-  boxes.push(new Box(mouseX,mouseY,random(10,40),random(10,40)));
-}
-
-function Box(x,y,w,h){
-  let options={
-    friction:0.3,
-    restitution: 0.6
-  };
-  this.body = Bodies.rectangle(x, y, w, h,options);
-  this.w= w;
-  this.h= h;
-  Composite.add(engine.world,[this.body]);
-
-  this.show = function(){
-    let pos = this.body.position;
-    let angle = this.body.angle;
-
-    push();
-    translate(pos.x,pos.y);
-    rectMode(CENTER);
-    rect(0,0,this.w,this.h);
-
-    pop();
-  };
+  display(){
+    fill(255);
+    rect(this.x,this.y,this.w,this.h);
+  }
 
 }
 
+class Cat{
+  constructor(x,y,w,h){
+    this.x = x;
+    this.y =y;
+    this.w =w;
+    this.h =h;
+  }
+  display(){
+    fill(255);
+  }
+}
 // let mode; // to determine the game has started or not
 
 // //image
