@@ -19,6 +19,8 @@ let runner;
 
 let ground;
 let box;
+let cat;
+let sling;
 function setup(){
   createCanvas(windowWidth,windowHeight);
   engine = Engine.create();
@@ -26,40 +28,53 @@ function setup(){
   runner = Runner.create();
   Runner.run(runner, engine);
 
-  ground = new Box (0,height-70,width,70);
-  box = new Box(width/2,height/1.67,width/12,200);
-
+  ground = new Box (width/2,height-70,width,70);
+  box = new Box(width/1.4,height/1.67,width/28,240);
+  cat = new Cat(width/7,height/1.5,85);
+  sling = new Box(width/5,height/1.7,width/70,100);
 }
 function draw(){
   background(51);
   ground.display();
   box.display();
+  cat.display();
+  sling.display();
 }
 
 
 class Box{
   constructor(x,y,w,h){
-    this.x = x;
-    this.y = y;
+    
+    this.body= Matter.Bodies.rectangle(x,y,w,h,{ isStatic: true});
+    Composite.add(engine.world, [this.body]);
     this.w= w;
     this.h= h;
   }
   display(){
+    const pos = this.body.position;
+    const angle = this.body.angle;
+    push();
+    translate(pos.x,pos.y);
+    rotate(angle);
     fill(255);
-    rect(this.x,this.y,this.w,this.h);
+    rectMode(CENTER);
+    rect(0,0,this.w,this.h);
+    pop();
   }
 
 }
 
+
 class Cat{
-  constructor(x,y,w,h){
+  constructor(x,y,r){
     this.x = x;
     this.y =y;
-    this.w =w;
-    this.h =h;
+    this.r =r;
+    //this.h =h;
   }
   display(){
     fill(255);
+    circle(this.x,this.y,this.r);
   }
 }
 // let mode; // to determine the game has started or not
@@ -71,9 +86,6 @@ class Cat{
 // let kitty;
 
 // let myFont;
-// let ground;
-// let box;
-// let cat;
 
 // class Box{
 //   constructor(x,y,w,h){
