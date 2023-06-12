@@ -2,50 +2,80 @@
 // Albee Raida
 // Date
 //
-// Extra for Experts:
+// Extra for Experts: constants, Matter.js(mass,engine,restitution,friction,constraints),
 // 
+const {Engine,World,Bodies,Runner,Mouse,MouseConstraint,Constraint,Composite} = Matter;
 
-// eslint-disable-next-line no-var
-let Engine = Matter.Engine;
-//let Render = Matter.Render;
-let Runner = Matter.Runner;
-let Bodies = Matter.Bodies;
-let Composite = Matter.Composite;
-
-// create an engine
 let engine; 
 let world;
 let runner;
+let mouseConst;
 
 let ground;
-let box;
+let boxes=[];
 let cat;
 let sling;
+
+// //image
+let sky;
+let city;
+let alien;
+let catimg;
+
+function preload(){
+  sky = loadImage("clouds.png");
+  city = loadImage("cityscape.png");
+  alien = loadImage("alien.png");
+  catimg = loadImage("cat.png");
+  //myFont = loadFont("ClassicRock.ttf");
+}
 function setup(){
   createCanvas(windowWidth,windowHeight);
   engine = Engine.create();
   world = engine.world;
   runner = Runner.create();
   Runner.run(runner, engine);
+  const mouse = Mouse.create(canvas.elt);
+  const options = {
+    mouse:mouse
+  };
+  mouseConst = MouseConstraint.create(engine,options);
+  Composite.add(engine.world, [mouseConst]);
 
-  ground = new Box (width/2,height-70,width,70);
-  box = new Box(width/1.4,height/1.67,width/28,240);
-  cat = new Cat(width/7,height/1.5,85);
-  sling = new Box(width/5,height/1.7,width/70,100);
+  for(let i = 0;i<3;i++){ //spawning more box
+    boxes[i] = new Box(width/1.4,height/1.50-(i*140),200,200,{isStatic:false}); //stack mode
+  }
+  cat = new Cat(width/5,height/1.6,65);
+  ground = new Box (width/2,height-10,width,120,{isStatic:true});
+  sling = new SlingShot(width/5,height/1.7,cat.body);
 }
 function draw(){
-  background(51);
-  ground.display();
-  box.display();
+  background(city);
+  ground.displayFloor();
+  for(let box of boxes){ 
+    box.display();
+  }
+  sling.display();//slingshot behind the cat
   cat.display();
-  sling.display();
 }
 
+function keyPressed(){ //bring back the cat
+  if(key === ' '){
+    world.remove(world,cat.body);
+    cat = new Cat(width/5,height/1.6,65);
+    sling.attach(cat.body);
+  }
+}
 
+function mouseReleased(){//releasing the cat
+  setTimeout(()=>{
+    sling.project();
+  }, 80); //less then 50 won't break through the aliens
+}
 class Box{
-  constructor(x,y,w,h){
-    
-    this.body= Matter.Bodies.rectangle(x,y,w,h,{ isStatic: true});
+  constructor(x,y,w,h,s){
+    this.static = s;
+    this.body= Matter.Bodies.rectangle(x,y,w,h,s);
     Composite.add(engine.world, [this.body]);
     this.w= w;
     this.h= h;
@@ -57,86 +87,78 @@ class Box{
     translate(pos.x,pos.y);
     rotate(angle);
     fill(255);
+    imageMode(CENTER);
+    image(alien,0,0,this.w,this.h);
+    pop();
+  }
+  displayFloor(){ ///only for the ground
+    const pos = this.body.position;
+    const angle = this.body.angle;
+    push();
+    translate(pos.x,pos.y);
+    rotate(angle);
+    noStroke();
+    fill("#344666");
     rectMode(CENTER);
     rect(0,0,this.w,this.h);
     pop();
   }
 
 }
-
-
 class Cat{
   constructor(x,y,r){
-    this.x = x;
-    this.y =y;
+    const options = { //bounce back after hitting the aliens
+      restitution: 0.8
+    };
+    this.body = Matter.Bodies.circle(x,y,r,options);
+    Matter.Body.setMass(this.body,this.body.mass*4);
     this.r =r;
-    //this.h =h;
+    Composite.add(engine.world, [this.body]);
   }
   display(){
-    fill(255);
-    circle(this.x,this.y,this.r);
+    const pos = this.body.position;
+    const angle = this.body.angle;
+    push();
+    translate(pos.x,pos.y);
+    rotate(angle);
+    imageMode(CENTER);
+    image(catimg,0,0,this.r*2,this.r*2);
+    pop();
+  }
+}
+class SlingShot{
+  constructor(x,y,body){
+    const options = {
+      pointA:{
+        x:x,
+        y:y
+      },
+      bodyB:body,
+      stiffness: 0.01,
+      length: 60
+    };
+    this.sling = Constraint.create(options);
+    Composite.add(engine.world, [this.sling]);
+  }
+  display(){
+    if(this.sling.bodyB){
+      stroke(255);
+      const posA = this.sling.pointA;
+      const posB = this.sling.bodyB.position;
+      line(posA.x,posA.y,posB.x,posB.y);
+    }
+  }
+  project(){
+    this.sling.bodyB = null;
+  }
+  attach(body){
+    this.sling.bodyB=body;
   }
 }
 // let mode; // to determine the game has started or not
 
-// //image
-// let sky;
-// let city;
-// let alien;
-// let kitty;
-
 // let myFont;
 
-// class Box{
-//   constructor(x,y,w,h){
-//     this.x = x;
-//     this.y = y;
-//     this.w = w;
-//     this.h = h;
-//     this.groundColour = color("#082226");
-//   }
-//   //ground
-//   displayGround(){
-//     fill(this.groundColour);
-//     rect(this.x,this.y,this.w,this.h);
-//   }
-//   //aliens
-//   display(){
-//     image(alien,windowWidth/1.5,(windowHeight/2.4),width/4,height/2);
-//   }
-// }
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// class Cat{
-//   constructor(x,y,r){
-//     this.x = x;
-//     this.y = y;
-//     this.r = r;
-//   }
-//   displayCat(){
-//     fill(255);
-//     image(kitty,windowWidth/7,(windowHeight/1.5),width/8,height/5);
-
-//   }
-// }
-
-// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// function preload(){
-//   sky = loadImage("clouds.png");
-//   city = loadImage("cityscape.png");
-//   alien = loadImage("alien.png");
-//   kitty = loadImage("cat.png");
-//   //myFont = loadFont("ClassicRock.ttf");
-// }
-
-// let playerSprite;
-// function setup() {
-//   mode = 0;
-//   createCanvas(windowWidth, windowHeight);
-
-
-//   ground = new Box(0,windowHeight/1.2,windowWidth,200);
-//   box = new Box(alien,this.x,this.y,this.w, this.h);
-//   cat = new Cat(kitty,this.x,this.y,this.w,this.h);
 //   textSize(60);
 // }
 
@@ -144,14 +166,7 @@ class Cat{
 //   background(0);
 //   mainMenu();
 
-//   //testing
-//   box.display();
-//   ground.displayGround();
-//   cat.displayCat();
-
-// }
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//}
 // //idea: raining cats or cats moving in rectangle
 // function mainMenu(){
 
@@ -205,15 +220,5 @@ class Cat{
 //   if (keyCode === SHIFT) {// start of the game
 //     mode= 2;
 //   }
-// }
-
-
-// // game coding
-// function pawtactor(){
-//   background(city);
-//   box.display();
-//   ground.displayGround();
-//   cat.displayCat();
-//   //cat.moveTowards(mouse, 0.10);
 // }
 
