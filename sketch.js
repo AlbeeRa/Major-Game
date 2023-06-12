@@ -4,12 +4,19 @@
 //
 // Extra for Experts: constants, Matter.js(mass,engine,restitution,friction,constraints),
 // 
+
+
+//PROBLEMS: slingshot doesnt work with the modes, cat doesn't come back to the sling
+// UNCOMPLETE: main menu, tutorial, points, Beta testing
+
 const {Engine,World,Bodies,Runner,Mouse,MouseConstraint,Constraint,Composite} = Matter;
 
 let engine; 
 let world;
 let runner;
 let mouseConst;
+
+let mode; // to determine the game has started or not
 
 let ground;
 let boxes=[];
@@ -30,11 +37,14 @@ function preload(){
   //myFont = loadFont("ClassicRock.ttf");
 }
 function setup(){
+  mode = 0;
+
   createCanvas(windowWidth,windowHeight);
   engine = Engine.create();
   world = engine.world;
   runner = Runner.create();
   Runner.run(runner, engine);
+
   const mouse = Mouse.create(canvas.elt);
   const options = {
     mouse:mouse
@@ -48,22 +58,31 @@ function setup(){
   cat = new Cat(width/5,height/1.6,65);
   ground = new Box (width/2,height-10,width,120,{isStatic:true});
   sling = new SlingShot(width/5,height/1.7,cat.body);
+
 }
 function draw(){
-  background(city);
-  ground.displayFloor();
-  for(let box of boxes){ 
-    box.display();
+  background(0);
+  mainMenu();
+
+  if(mode ===1){
+    background(city);
+    ground.displayFloor();
+    for(let box of boxes){ 
+      box.display();
+    }
+    sling.display();//slingshot behind the cat
+    cat.display();
   }
-  sling.display();//slingshot behind the cat
-  cat.display();
 }
 
 function keyPressed(){ //bring back the cat
-  if(key === ' '){
-    world.remove(world,cat.body);
-    cat = new Cat(width/5,height/1.6,65);
-    sling.attach(cat.body);
+  if (keyCode === ENTER) { // start game
+    mode= 1;
+    if(key === ' '){
+      world.remove(world,cat.body);
+      cat = new Cat(width/5,height/1.6,65);
+      sling.attach(cat.body);
+    }
   }
 }
 
@@ -71,6 +90,22 @@ function mouseReleased(){//releasing the cat
   setTimeout(()=>{
     sling.project();
   }, 80); //less then 50 won't break through the aliens
+}
+
+function mainMenu(){
+  //first thing you will see
+  if (mode===0){
+    background(sky);
+    //title
+    textAlign(CENTER);
+    fill("black");
+    text("Pawtactor", windowWidth/2,windowHeight/3);
+
+    //start command
+    fill("#fff5eb");
+    text("Press Enter", windowWidth/2,windowHeight/2);
+    //textFont(myFont);
+  }
 }
 class Box{
   constructor(x,y,w,h,s){
@@ -155,7 +190,7 @@ class SlingShot{
     this.sling.bodyB=body;
   }
 }
-// let mode; // to determine the game has started or not
+
 
 // let myFont;
 
@@ -168,29 +203,7 @@ class SlingShot{
 
 //}
 // //idea: raining cats or cats moving in rectangle
-// function mainMenu(){
 
-//   //first thing you will see
-//   if (mode===0){
-//     background(sky);
-
-//     //title
-//     textAlign(CENTER);
-//     fill("black");
-//     text("Pawtactor", windowWidth/2,windowHeight/3);
-
-//     //start command
-//     fill("#fff5eb");
-//     text("Press Enter", windowWidth/2,windowHeight/2);
-//     //textFont(myFont);
-// ///////////////////////////////////////////////////////
-
-
-
-
-
-
-//   }
 //   //How to play
 //   if (mode=== 1 ){
 
