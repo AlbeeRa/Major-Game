@@ -30,17 +30,19 @@ let city;
 let enemy;
 let catimg;
 
+let myFont;
 function preload(){
   sky = loadImage("clouds.png");
   city = loadImage("cityscape.png");
   enemy = loadImage("alien.png");
   catimg = loadImage("cat.png");
-  //myFont = loadFont("ClassicRock.ttf");
+  myFont = loadFont("Mosaic.ttf");
 }
 function setup(){
-  //mode = 0;
+  mode = 0;
 
   createCanvas(windowWidth,windowHeight);
+  textSize(120);
   engine = Engine.create();
   world = engine.world;
   runner = Runner.create();
@@ -64,17 +66,29 @@ function setup(){
 }
 function draw(){
   background(city);
-  ground.displayFloor();
-  for(let box of boxes){ 
-    box.display();
+  if (mode === 0){
+    mainMenu();
   }
-  sling.display();//slingshot behind the cat
-  cat.display();
-  alien.displayEnemy();
+  if (mode ===1){
+    game();
+  }
+  // ground.displayFloor();
+  // for(let box of boxes){ 
+  //   box.display();
+  // }
+  // sling.display();//slingshot behind the cat
+  // cat.display();
+  // alien.displayEnemy();
 }
 
 
 function keyPressed(){ //bring back the cat
+  if (keyCode === ENTER) { // tutorial
+    mode= 1;
+  }
+  if (keyCode === SHIFT) { //menu
+    mode= 0;
+  }
   if(key === ' '){
     world.remove(world,cat.body);
     cat = new Cat(width/5,height/1.6,65);
@@ -89,21 +103,20 @@ function mouseReleased(){//releasing the cat
   }, 80); //less then 50 won't break through the aliens
 }
 
-// function mainMenu(){
-//   //first thing you will see
-//   if (mode===0){
-//     background(sky);
-//     //title
-//     textAlign(CENTER);
-//     fill("black");
-//     text("Pawtactor", windowWidth/2,windowHeight/3);
+function mainMenu(){
+  //first thing you will see
+  background(sky);
+  //title
+  textAlign(CENTER);
+  fill("black");
+  textFont(myFont);
+  text("Pawtactor", windowWidth/2,windowHeight/3);
 
-//     //start command
-//     fill("#fff5eb");
-//     text("Press Enter", windowWidth/2,windowHeight/2);
-//     //textFont(myFont);
-//   }
-// }
+  //start command
+  fill("#fff5eb");
+  text("Press Enter", windowWidth/2,windowHeight/2);
+  //textFont(myFont);
+}
 class Box{
   constructor(x,y,w,h,s){
     this.static = s;
@@ -209,12 +222,17 @@ class SlingShot{
     this.sling.bodyB=body;
   }
 }
-
+function game(){
+  ground.displayFloor();
+  for(let box of boxes){ 
+    box.display();
+  }
+  sling.display();//slingshot behind the cat
+  cat.display();
+  alien.displayEnemy();
+}
 
 // let myFont;
-
-//   textSize(60);
-// }
 
 // function draw() {
 //   background(0);
