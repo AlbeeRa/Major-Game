@@ -41,7 +41,7 @@ function preload(){
   catimg = loadImage("cat.png");
   myFont = loadFont("Mosaic.ttf");
   soundFormats("mp3");
-  bgMusic = loadSound("Yoshi Map");
+  bgMusic = loadSound("Itty Bitty");
 }
 function setup(){
   mode = 0;
