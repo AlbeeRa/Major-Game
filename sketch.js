@@ -44,7 +44,7 @@ function preload(){
   bgMusic = loadSound("Itty Bitty");
 }
 function setup(){
-  mode = 0;
+  mode = "mainMenu";
 
   createCanvas(windowWidth,windowHeight);
   textSize(120);
@@ -75,51 +75,45 @@ function draw(){
   Engine.update(engine); //new
 
   background(city);
-  if (mode === 0){
-    mainMenu();
+  if (mode === "mainMenu"){
+    //first thing you will see
+    background(sky);
+    //title
+    textAlign(CENTER);
+    fill("black");
+    textFont(myFont);
+    text("Pawtactor", windowWidth/2,windowHeight/3);
+ 
+    //start command
+    fill("#fff5eb");
+    text("Press Enter", windowWidth/2,windowHeight/2);
   }
   if (mode ===1){
     game();
   }
-  if (mode ===2){
-    tutorial();
+  if (mode ==="tutorial"){
+    background(city);
+    textAlign(CENTER);
+    fill("#ffffff");
+    textFont(myFont);
+    text("SHIFT to start", windowWidth/2,windowHeight/1.6);
+    text("ESC to return", windowWidth/2,windowHeight/1.2);
+
+    textSize(90);
+    fill("#1c2d2e");
+    text("Mouse to control the cat", windowWidth/2,windowHeight/2.2);
+    textSize(100);
+    text("TUTORIAL!!", windowWidth/2,windowHeight/5);
   }
 }
 
-function mainMenu(){
-  //first thing you will see
-  background(sky);
-  //title
-  textAlign(CENTER);
-  fill("black");
-  textFont(myFont);
-  text("Pawtactor", windowWidth/2,windowHeight/3);
- 
-  //start command
-  fill("#fff5eb");
-  text("Press Enter", windowWidth/2,windowHeight/2);
-}
-function tutorial(){
-  background(city);
-  textAlign(CENTER);
-  fill("#ffffff");
-  textFont(myFont);
-  text("SHIFT to start", windowWidth/2,windowHeight/1.6);
-  text("ESC to return", windowWidth/2,windowHeight/1.2);
-
-  textSize(90);
-  fill("#1c2d2e");
-  text("Mouse to control the cat", windowWidth/2,windowHeight/2.2);
-  textSize(100);
-  text("TUTORIAL!!", windowWidth/2,windowHeight/5);
-}
 
 function keyPressed(){ //bring back the cat
   if (keyCode === ENTER) { // tutorial
-    mode= 2;
+    mode= "tutorial";
   }
   if (keyCode === ESCAPE) { //menu
-    mode= 0;
+    mode= "mainMenu";
   }
   if (keyCode === SHIFT) { //game
     mode= 1;
