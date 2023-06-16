@@ -138,7 +138,7 @@ function game(){
 function mouseReleased(){//releasing the cat
   setTimeout(()=>{
     sling.project();
-  }, 80); //less then 50 won't break through the aliens
+  },20); //less then 50 won't break through the aliens
 }
 
 
