@@ -13,9 +13,14 @@ class Cat{
     const angle = this.body.angle;
     push();
     translate(pos.x,pos.y);
+    catx = pos.x;
+    caty = pos.y;
     rotate(angle);
     imageMode(CENTER);
     image(catimg,0,0,this.r*2,this.r*2);
     pop();
+  }
+  delete(){
+    Matter.World.remove(world,this.body);
   }
 }

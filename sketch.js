@@ -33,6 +33,12 @@ let catimg;
 let myFont;
 let bgMusic;
 
+let play, coin, goBack;
+let coinCounter = 0;
+let currentlevel =1;
+let catx;
+let caty;
+let catFly;
 
 function preload(){
   sky = loadImage("clouds.png");
@@ -44,33 +50,38 @@ function preload(){
   bgMusic = loadSound("Itty Bitty");
 }
 function setup(){
+
   mode = "mainMenu";
 
   createCanvas(windowWidth,windowHeight);
   textSize(120);
   engine = Engine.create();
+
   world = engine.world;
   runner = Runner.create();
   Runner.run(runner, engine);
+  bgMusic.loop();///loop background music
 
   const mouse = Mouse.create(canvas.elt);
   const options = {
     mouse:mouse
   };
+
   mouseConst = MouseConstraint.create(engine,options);
 
   Composite.add(engine.world, [mouseConst]);
 
-  bgMusic.loop();///loop background music
-  ground = new Box (width/2,height-10,width,120,{isStatic:true});
+  // ground = new Box (width/2,height-10,width,120,{isStatic:true});
 
-  for(let i = 0;i<3;i++){ //spawning more box
-    boxes[i] = new Box(width/1.4,height/1.50-(i*140),50,150,{isStatic:false}); //stack mode
-  }
-  alien = new Alien(width/1.6,height/1.4,200,200,{isStatic:false});
-  cat = new Cat(width/5,height/1.4,65);
-  sling = new SlingShot(width/5,height/1.7,cat.body);
+  // for(let i = 0;i<3;i++){ //spawning more box
+  //   boxes[i] = new Box(width/1.4,height/1.50-(i*140),50,150,{isStatic:false}); //stack mode
+  // }
+  // alien = new Alien(width/1.6,height/1.4,200,200,{isStatic:false});
+  // cat = new Cat(width/5,height/1.4,65);
+  // sling = new SlingShot(width/5,height/1.7,cat.body);
 }
+
+
 function draw(){
   Engine.update(engine); //new
 
@@ -88,10 +99,36 @@ function draw(){
     fill("#fff5eb");
     text("Press Enter", windowWidth/2,windowHeight/2);
   }
-  if (mode ===1){
-    game();
+  else if (mode ==="level1"){
+    //game();
+    if (currentlevel===1){
+      ground = new Box (width/2,height-10,width,120,{isStatic:true});
+
+      for(let i = 0;i<3;i++){ //spawning more box
+        boxes[i] = new Box(width/1.4,height/1.50-(i*140),50,150,{isStatic:false}); //stack mode
+      }
+      alien = new Alien(width/1.6,height/1.4,200,200,{isStatic:false});
+      cat = new Cat(width/5,height/1.4,65);
+      sling = new SlingShot(width/5,height/1.7,cat.body);
+
+      currentlevel=0;
+
+    }
+
+  
+
+    background(city);
+
+
+    ground.displayFloor();
+    for(let box of boxes){ 
+      box.display();
+    }
+    sling.display();//slingshot behind the cat
+    cat.display();
+    alien.displayEnemy();  
   }
-  if (mode ==="tutorial"){
+  else if (mode ==="tutorial"){
     background(city);
     textAlign(CENTER);
     fill("#ffffff");
@@ -108,6 +145,23 @@ function draw(){
 }
 
 
+
+// function game(){
+//   ground.displayFloor();
+//   for(let box of boxes){ 
+//     box.display();
+//   }
+//   sling.display();//slingshot behind the cat
+//   cat.display();
+//   alien.displayEnemy();
+// }
+
+function mouseReleased(){//releasing the cat
+  setTimeout(()=>{
+    sling.project();
+  },20); //less then 50 won't break through the aliens
+}
+
 function keyPressed(){ //bring back the cat
   if (keyCode === ENTER) { // tutorial
     mode= "tutorial";
@@ -116,7 +170,7 @@ function keyPressed(){ //bring back the cat
     mode= "mainMenu";
   }
   if (keyCode === SHIFT) { //game
-    mode= 1;
+    mode= "level1";
   }
   if(key === ' '){ ///respawn not working
     world.remove(world,cat.body);
@@ -124,24 +178,6 @@ function keyPressed(){ //bring back the cat
     sling.attach(cat.body);
   }
 }
-
-function game(){
-  ground.displayFloor();
-  for(let box of boxes){ 
-    box.display();
-  }
-  sling.display();//slingshot behind the cat
-  cat.display();
-  alien.displayEnemy();
-}
-
-function mouseReleased(){//releasing the cat
-  setTimeout(()=>{
-    sling.project();
-  },20); //less then 50 won't break through the aliens
-}
-
-
 
 //   //How to play
 //   if (mode=== 2 ){
