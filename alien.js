@@ -11,6 +11,8 @@ class Alien{
     const angle = this.body.angle;
     push();
     translate(pos.x,pos.y);
+    alienx = pos.x;
+    alieny = pos.y;
     rotate(angle);
     fill(255);
     imageMode(CENTER);
