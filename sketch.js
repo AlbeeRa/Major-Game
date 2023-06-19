@@ -20,8 +20,8 @@ let alien;
 let sling;
 
 // preload variables
-let sky,city,enemy,catimg,cat1img,cat2img;
-let myFont,bgMusic,button;
+let sky,city,enemy,catimg;
+let myFont,bgMusic,button,button1,button2,button3;
 
 let coinCounter = 0;
 let currentlevel =1;
@@ -35,9 +35,7 @@ function preload(){
   sky = loadImage("images/clouds.png");
   city = loadImage("images/cityscape.png");
   enemy = loadImage("images/alien.png");
-  catimg = loadImage("images/cat.png");
-  cat1img = loadImage("images/cat1.png");
-  cat2img = loadImage("images/cat2.png");
+  catimg = [loadImage("images/cat.png"),loadImage("images/cat1.png"),loadImage("images/cat2.png")];
   myFont = loadFont("Mosaic.ttf");
   soundFormats("mp3");
   bgMusic = loadSound("Itty Bitty");
@@ -48,8 +46,6 @@ function setup(){
   mode = "mainMenu";
 
   createCanvas(windowWidth,windowHeight);
-
-  textSize(120);
   w = windowWidth;
   h = windowHeight;
 
@@ -70,6 +66,7 @@ function setup(){
   };
   mouseConst = MouseConstraint.create(engine,options);
   Composite.add(engine.world, [mouseConst]);
+  catPick=catimg[0];
 }
 
 //music button on the top left corner
@@ -102,7 +99,41 @@ function draw(){
     tutorial();
   }
 }
+function keyTyped(){ ///for picking character
+  if(key === "a"){
+    catPick = catimg[0];
+  }
+  if(key === "s"){
+    catPick = catimg[1];
+  }
+  if(key === "d"){
+    catPick = catimg[2];
+  }
+  
+}
+function pick(){  ///pick your player
+  background(city);
+  //heading
+  textAlign(CENTER);
+  fill("#ffffff");
+  textFont(myFont);
+  textSize(80);
+  text("Pick Your Pawtactor!!", w/2,h/5);
+  //cat 1
+  textSize(30);
+  text("press A", w/2.6,h/3);
+  image(catimg[0],w/3, h/3,catimg[0].width*2,catimg[0].height*2);
 
+  //cat 2
+  text("press S",w/1.5, h/3);
+  image(catimg[1],w/1.7, h/2.9,catimg[1].width/10*2,catimg[1].height/10*2);
+
+  //cat 3 (special guest)
+  text("press D",w/2, h/1.7);
+  image(catimg[2],w/2.2, h/1.6,catimg[2].width/10*2,catimg[2].height/10*2);
+  fill("#1c2d2e");
+  text("SHIFT to play", w/2,h/10);
+}
 function game(){
   if (currentlevel===1){ //if the game is starting for first time or not(if not 1st time then will delete previous obj)
 
@@ -183,6 +214,7 @@ function game(){
 function menu(){
   //first thing you will see
   background(sky);
+  textSize(120);
   //title
   textAlign(CENTER);
   fill("black");
@@ -193,33 +225,18 @@ function menu(){
   fill("#fff5eb");
   text("Press Enter", w/2,h/2);
 }
-function pick(){  ///pick your player  PROBLEM CHARACTER DOESNT CHANGE AFTER PICKING ONCE< CANT HIDE BUTTONS
-  background(city);
-  //heading
-  textAlign(CENTER);
-  fill("#ffffff");
-  textFont(myFont);
-  textSize(80);
-  text("Pick Your Pawtactor!!", w/2,h/5);
-
-  //cat 1
-  button = createButton("El Gato");
-  button.mousePressed(catPick= catimg);
-  button.position(w/3, h/3);
-  image(catimg,w/3, h/3,catimg.width*2,catimg.height*2);
-
-  //cat 2
-  button = createButton("Banana Cat");
-  button.mousePressed(catPick= cat1img);
-  button.position(w/1.7, h/3);
-  image(cat1img,w/1.7, h/3,cat1img.width/10*2,cat1img.height/10*2);
-
-  //cat 3 (special guest)
-  button = createButton("Dio");
-  button.mousePressed(catPick= cat2img);
-  button.position(w/2.1, h/1.8);
-  image(cat2img,w/2.2, h/1.6,cat2img.width/10*2,cat2img.height/10*2);
-
+function deleteObjects(){
+  for(let i = 0;i<boxes.length;i++){ //spawning more box
+    if(boxes[i].body){
+      World.remove(world, boxes[i].body);
+    }
+  }
+  if (cat.body){
+    World.remove(world,cat.body);
+  }
+  if (alien.body){
+    World.remove(world,alien.body);
+  }
 }
 function tutorial(){
   background(city);
@@ -241,23 +258,8 @@ function tutorial(){
 function mouseReleased(){//releasing the cat
   setTimeout(()=>{
     sling.project();
-  },50); //less then 50 won't break through the aliens
+  },30); //less then 30 won't break through the aliens
 }
-
-function deleteObjects(){
-  for(let i = 0;i<boxes.length;i++){ //spawning more box
-    if(boxes[i].body){
-      World.remove(world, boxes[i].body);
-    }
-  }
-  if (cat.body){
-    World.remove(world,cat.body);
-  }
-  if (alien.body){
-    World.remove(world,alien.body);
-  }
-}
-
 function keyPressed(){ 
   if (keyCode === ENTER) { // tutorial
     mode= "tutorial";
