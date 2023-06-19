@@ -6,6 +6,7 @@ class Cat{
     this.body = Bodies.circle(x,y,r,options);
     Body.setMass(this.body,this.body.mass*4);
     this.r =r;
+    catRadius = r;
     Composite.add(engine.world, [this.body]);
   }
   display(){
@@ -17,7 +18,7 @@ class Cat{
     caty = pos.y;
     rotate(angle);
     imageMode(CENTER);
-    image(catimg,0,0,this.r*2,this.r*2);
+    image(catPick,0,0,this.r*2,this.r*2);
     pop();
   }
   delete(){
