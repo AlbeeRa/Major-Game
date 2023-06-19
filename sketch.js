@@ -1,8 +1,6 @@
 // Pawtactor! (MAJOR PROJECT)
 // Albee Raida
-// Date
-//
-// Extra for Experts: constants, Matter.js(mass,engine,restitution,friction,constraints)
+// Date: 19th June 2023
 // UNCOMPLETE: points
 
 const {Body,Engine,World,Bodies,Runner,Mouse,MouseConstraint,Constraint,Composite} = Matter;
@@ -39,7 +37,7 @@ function preload(){
   myFont = loadFont("Mosaic.ttf");
   soundFormats("mp3");
   bgMusic = loadSound("Itty Bitty");
-  winMusic = loadSound("yay");
+  //winMusic = loadSound("yay");
 }
 
 function setup(){
