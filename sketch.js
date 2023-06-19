@@ -3,7 +3,7 @@
 // Date
 //
 // Extra for Experts: constants, Matter.js(mass,engine,restitution,friction,constraints)
-// UNCOMPLETE: points, button,respawn, Beta testing
+// UNCOMPLETE: points, Beta testing
 
 const {Body,Engine,World,Bodies,Runner,Mouse,MouseConstraint,Constraint,Composite} = Matter;
 
@@ -21,15 +21,15 @@ let sling;
 
 // preload variables
 let sky,city,enemy,catimg;
-let myFont,bgMusic,button,button1,button2,button3;
+let myFont,bgMusic,winMusic,button;
 
 let coinCounter = 0;
 let currentlevel =1;
 let alienx,alieny;
 let catx,caty;
-let testX,testY;
 let catRadius;
 let w,h;
+let tempAX,tempAY;
 
 function preload(){
   sky = loadImage("images/clouds.png");
@@ -39,6 +39,7 @@ function preload(){
   myFont = loadFont("Mosaic.ttf");
   soundFormats("mp3");
   bgMusic = loadSound("Itty Bitty");
+  winMusic = loadSound("yay");
 }
 
 function setup(){
@@ -80,7 +81,6 @@ function togglePlaying(){
     button.html("music");
   }
 }
-
 function draw(){
   Engine.update(engine);
   background(0);
@@ -145,6 +145,15 @@ function game(){
     cat = new Cat(w/5,h/1.4,65);
     sling = new SlingShot(w/5,h/1.7,cat.body);
 
+    ///victory
+    if(alienx>tempAX){ ///temp solution for victory
+      textSize(50);
+      fill("white");
+      textFont(myFont);
+      text("PAWTRACTOR SAVED THE WORLD!", w/2,h/5);
+
+    }
+
     currentlevel=0;
   }
 
@@ -157,60 +166,24 @@ function game(){
   cat.display();
   alien.displayEnemy();  
 
-  ///point system if hit the alien
-  testX = catx;
-  testY = caty;
-  if(catx<alienx){ //left edge
-    testX=alienx;
-  }
-  else if(catx>alienx+200){ //right edge
-    testX=alienx+200;
-  }
-
-  if(caty<alieny){//top edge
-    testY=alieny;
-  }
-  else if(caty>alieny+200){ //bottom edge
-    testY= alieny+200;
-  }
-
-  let distX= catx-testX;
-  let distY = caty-testY;
-  let distance = sqrt(distX*distY+distY*distY);
-
-  if (distance<=catRadius){
+  ///point system if hit the alien (Incomplete)
+  if (
+    catx + 200 >= alienx &&
+    catx + 200 <= alienx + 200 &&
+    caty + 200 >= alieny &&
+    caty + 200 <= alieny + 200
+  ) {
     coinCounter++;
-    // fill("white");
-    // textFont(myFont);
-    // text("point ="+coinCounter, w/2,h/5);
   }
-  // else{
-  //   coinCounter;
-  //   fill("white");
-  //   textFont(myFont);
-  //   text("point ="+coinCounter, w/2,h/5);
-  // }
-  console.log(coinCounter);
-  // if(catx>alienx&&catx<alienx+200&&caty&&alieny&&caty<alieny+200){
-  //   coinCounter++;
-  //   fill("white");
-  //   textFont(myFont);
-  //   text("point ="+coinCounter, w/2,h/5);
-
-  //   ///victory
-  //   if(coinCounter>10){
-  //     fill("white");
-  //     textFont(myFont);
-  //     text("Yipee!!", w/2,h/5);
-
-  //   }
   // }
   // else{
   //   fill("white");
   //   textFont(myFont);
   //   text("point ="+coinCounter, w/2,h/5);
   // }
+  
 }
+//console.log(coinCounter);
 function menu(){
   //first thing you will see
   background(sky);
@@ -226,7 +199,7 @@ function menu(){
   text("Press Enter", w/2,h/2);
 }
 function deleteObjects(){
-  for(let i = 0;i<boxes.length;i++){ //spawning more box
+  for(let i = 0;i<boxes.length;i++){ 
     if(boxes[i].body){
       World.remove(world, boxes[i].body);
     }
@@ -256,6 +229,8 @@ function tutorial(){
   text("TUTORIAL!!", w/2,h/5);
 }
 function mouseReleased(){//releasing the cat
+  tempAX = alienx;
+  tempAY = alieny;
   setTimeout(()=>{
     sling.project();
   },30); //less then 30 won't break through the aliens
@@ -270,14 +245,9 @@ function keyPressed(){
   if (keyCode === BACKSPACE) { //pick character
     mode= "pick";
   }
-  if(keyCode ===ALT){ ///respawn the cat (STILL NOT WORKING)
-    if (cat.body){
-      World.remove(world,cat.body);
-    }
-  }
   if (keyCode === SHIFT) { //game
     mode= "level1";
-    deleteObjects();
+    deleteObjects();//if not playing for the first time, It will delete the previous objects
     currentlevel=1;
   }
 }
