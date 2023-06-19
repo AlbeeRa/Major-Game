@@ -3,7 +3,7 @@
 // Date
 //
 // Extra for Experts: constants, Matter.js(mass,engine,restitution,friction,constraints)
-// UNCOMPLETE: points, Beta testing
+// UNCOMPLETE: points
 
 const {Body,Engine,World,Bodies,Runner,Mouse,MouseConstraint,Constraint,Composite} = Matter;
 
@@ -150,7 +150,7 @@ function game(){
       textSize(50);
       fill("white");
       textFont(myFont);
-      text("PAWTRACTOR SAVED THE WORLD!", w/2,h/5);
+      text("PAWTACTOR SAVED THE WORLD!", w/2,h/5);
 
     }
 
@@ -174,6 +174,14 @@ function game(){
     caty + 200 <= alieny + 200
   ) {
     coinCounter++;
+  }
+  ///victory
+  if(alienx>tempAX){ ///temp solution for victory
+    textSize(50);
+    fill("white");
+    textFont(myFont);
+    text("PAWTACTOR SAVED THE WORLD!", w/2,h/5);
+
   }
   // }
   // else{
